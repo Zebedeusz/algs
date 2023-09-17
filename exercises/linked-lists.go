@@ -35,3 +35,33 @@ func RemoveDups(list *ds.LinkedList) {
 		}
 	}
 }
+
+// KthToLastElement returns slice of values of provided linked list starting from element at index/place k to the last element.
+func KthToLastElement(list *ds.LinkedList, k int) []int {
+	if list == nil || list.First == nil {
+		return []int{}
+	}
+	if k <= 0 {
+		return ds.LinkedListToSlice(list)
+	}
+
+	listLen := ds.Len(list)
+	if listLen < k {
+		return []int{}
+	}
+
+	n := 1
+	kthNodeFound := false
+	listKthToLast := make([]int, 0, listLen-k)
+	for currNode := list.First; currNode != nil; currNode = currNode.Next {
+		if n == k {
+			kthNodeFound = true
+		}
+		if kthNodeFound {
+			listKthToLast = append(listKthToLast, currNode.Value)
+		}
+		n++
+	}
+
+	return listKthToLast
+}

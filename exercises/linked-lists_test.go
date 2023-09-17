@@ -68,3 +68,64 @@ func TestRemoveDups(t *testing.T) {
 		})
 	}
 }
+
+func TestKthToLastElement(t *testing.T) {
+	type args struct {
+		list []int
+		k    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "k at the beginning of the list",
+			args: args{
+				list: []int{1, 2, 3, 4},
+				k:    1,
+			},
+			want: []int{1, 2, 3, 4},
+		},
+		{
+			name: "k at zero index",
+			args: args{
+				list: []int{1, 2, 3, 4},
+				k:    0,
+			},
+			want: []int{1, 2, 3, 4},
+		},
+		{
+			name: "k at the end of the list",
+			args: args{
+				list: []int{1, 2, 3, 4},
+				k:    4,
+			},
+			want: []int{4},
+		},
+		{
+			name: "k in the middle of the list",
+			args: args{
+				list: []int{1, 2, 3, 4},
+				k:    2,
+			},
+			want: []int{2, 3, 4},
+		},
+		{
+			name: "k greater than length of the list",
+			args: args{
+				list: []int{1, 2, 3, 4},
+				k:    5,
+			},
+			want: []int{},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list := ds.CreateLinkedListFromSlice(tt.args.list)
+			if got := KthToLastElement(&list, tt.args.k); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("KthToLastElement() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
