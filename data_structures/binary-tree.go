@@ -77,6 +77,10 @@ func Find(tree *Tree, value int) *Node {
 	return nil
 }
 
+// Delete removes node with provided value from the tree.
+// If the node had any elements to the left, they will be moved up.
+// If it also had any elements to the right, they will be added to the tree with Insert() function.
+// Possible evolution: replace the node with the value to delete with bottom-most, right-most node.
 func Delete(tree *Tree, value int) {
 	toCheck := []**Node{&tree.Root}
 	ticker := time.NewTicker(time.Second)
@@ -145,11 +149,11 @@ func Walk(t *Node, ch chan int) {
 //	 1
 //	 /\
 //	2   3
+//
 // /\  /\
 // 4 5 6 7
 // /
 // 8
-
 // -> 1, 2, 3, 4, 5, 6, 7, 8
 func WalkNodesLevelOrder(t *Tree, ch chan *Node) {
 	ch <- t.Root
