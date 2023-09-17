@@ -88,3 +88,21 @@ func Len(list *LinkedList) int {
 	}
 	return len
 }
+
+func KthNode(list *LinkedList, k int) *LinkedListNode {
+	if list == nil || list.First == nil {
+		return nil
+	}
+	if k <= 0 {
+		return list.First
+	}
+
+	n := 1
+	for currNode := list.First; currNode != nil; currNode = currNode.Next {
+		if n == k {
+			return currNode
+		}
+		n++
+	}
+	return nil
+}

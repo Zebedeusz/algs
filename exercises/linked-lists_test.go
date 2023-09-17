@@ -129,3 +129,50 @@ func TestKthToLastElement(t *testing.T) {
 		})
 	}
 }
+
+func TestDeleteMiddleNode(t *testing.T) {
+	type args struct {
+		list []int
+		k    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "2nd node",
+			args: args{
+				list: []int{1, 2, 3},
+				k:    2,
+			},
+			want: []int{1, 3},
+		},
+		{
+			name: "before-last node",
+			args: args{
+				list: []int{1, 2, 3, 4, 5, 6},
+				k:    5,
+			},
+			want: []int{1, 2, 3, 4, 6},
+		},
+		{
+			name: "1st node",
+			args: args{
+				list: []int{1, 2, 3, 4, 5, 6},
+				k:    1,
+			},
+			want: []int{2, 3, 4, 5, 6},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list := ds.CreateLinkedListFromSlice(tt.args.list)
+			node := ds.KthNode(&list, tt.args.k)
+			DeleteMiddleNode(node)
+			if got := ds.LinkedListToSlice(&list); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteMiddleNode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

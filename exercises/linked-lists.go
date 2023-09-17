@@ -65,3 +65,10 @@ func KthToLastElement(list *ds.LinkedList, k int) []int {
 
 	return listKthToLast
 }
+
+func DeleteMiddleNode(node *ds.LinkedListNode) {
+	if node == nil {
+		return
+	}
+	*node = *node.Next
+}
