@@ -176,3 +176,57 @@ func TestDeleteMiddleNode(t *testing.T) {
 		})
 	}
 }
+
+func TestPartition(t *testing.T) {
+	type args struct {
+		list []int
+		x    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "empty list",
+			args: args{
+				list: []int{},
+				x:    0,
+			},
+			want: []int{},
+		},
+		{
+			name: "x in the beginning of the list",
+			args: args{
+				list: []int{1, 2, 3, 4, 5},
+				x:    1,
+			},
+			want: []int{1, 2, 3, 4, 5},
+		},
+		{
+			name: "x at the end of the list",
+			args: args{
+				list: []int{4, 5, 1, 2, 3},
+				x:    3,
+			},
+			want: []int{1, 2, 4, 5, 3},
+		},
+		{
+			name: "x in the middle",
+			args: args{
+				list: []int{6, 7, 5, 4, 3, 2},
+				x:    5,
+			},
+			want: []int{4, 3, 2, 6, 7, 5},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list := ds.CreateLinkedListFromSlice(tt.args.list)
+			Partition(&list, tt.args.x)
+			if got := ds.LinkedListToSlice(&list); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Partition() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
