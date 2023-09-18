@@ -258,3 +258,22 @@ func reversedLinkedListToNumber(list *ds.LinkedList) (int, error) {
 
 	return strconv.Atoi(sbuilder.String())
 }
+
+// IsPalindrome checks whether a linked list is a palindrome.
+// e.g. 1 -> 2 -> 3 -> 2 -> 1 will return true,
+// 1 -> 0 -> 2 -> 0 will return false.
+func IsPalindrome(list *ds.LinkedList) bool {
+	if list == nil || list.First == nil {
+		return false
+	}
+
+	listSlice := ds.LinkedListToSlice(list)
+	listSliceLen := len(listSlice)
+
+	for i := range listSlice {
+		if listSlice[i] != listSlice[listSliceLen-i-1] {
+			return false
+		}
+	}
+	return true
+}

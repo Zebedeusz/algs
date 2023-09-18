@@ -383,3 +383,72 @@ func TestSumReversedListsV2(t *testing.T) {
 		})
 	}
 }
+
+func TestIsPalindrome(t *testing.T) {
+	type args struct {
+		list []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "empty list",
+			args: args{
+				list: []int{},
+			},
+			want: false,
+		},
+		{
+			name: "one element list",
+			args: args{
+				list: []int{1},
+			},
+			want: true,
+		},
+		{
+			name: "two elements list - false",
+			args: args{
+				list: []int{1, 2},
+			},
+			want: false,
+		},
+		{
+			name: "two elements list - true",
+			args: args{
+				list: []int{1, 1},
+			},
+			want: true,
+		},
+		{
+			name: "multiple elements list - true",
+			args: args{
+				list: []int{1, 2, 3, 4, 3, 2, 1},
+			},
+			want: true,
+		},
+		{
+			name: "multiple elements list - true - no element in the middle",
+			args: args{
+				list: []int{1, 2, 3, 3, 2, 1},
+			},
+			want: true,
+		},
+		{
+			name: "multiple elements list - false",
+			args: args{
+				list: []int{1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 5, 5, 1, 1, 2},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list := ds.CreateLinkedListFromSlice(tt.args.list)
+			if got := IsPalindrome(&list); got != tt.want {
+				t.Errorf("IsPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
