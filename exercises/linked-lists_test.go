@@ -230,3 +230,156 @@ func TestPartition(t *testing.T) {
 		})
 	}
 }
+
+func TestSumReversedLists(t *testing.T) {
+	type args struct {
+		list1 []int
+		list2 []int
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []int
+		wantErr bool
+	}{
+		{
+			name: "both lists empty",
+			args: args{
+				list1: []int{},
+				list2: []int{},
+			},
+			want:    []int{},
+			wantErr: false,
+		},
+		{
+			name: "list 1 empty",
+			args: args{
+				list1: []int{},
+				list2: []int{1},
+			},
+			want:    []int{},
+			wantErr: false,
+		},
+		{
+			name: "list 2 empty",
+			args: args{
+				list1: []int{1},
+				list2: []int{},
+			},
+			want:    []int{},
+			wantErr: false,
+		},
+		{
+			name: "one digit numbers",
+			args: args{
+				list1: []int{1},
+				list2: []int{1},
+			},
+			want:    []int{2},
+			wantErr: false,
+		},
+		{
+			name: "numbers of same length",
+			args: args{
+				list1: []int{1, 1, 1},
+				list2: []int{2, 5, 7},
+			},
+			want:    []int{3, 6, 8},
+			wantErr: false,
+		},
+		{
+			name: "numbers of different length",
+			args: args{
+				list1: []int{1, 1, 1, 7},
+				list2: []int{2, 5, 7},
+			},
+			want:    []int{3, 6, 8, 7},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list1 := ds.CreateLinkedListFromSlice(tt.args.list1)
+			list2 := ds.CreateLinkedListFromSlice(tt.args.list2)
+			got, err := SumReversedLists(&list1, &list2)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("SumReversedLists() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(ds.LinkedListToSlice(got), tt.want) {
+				t.Errorf("SumReversedLists() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSumReversedListsV2(t *testing.T) {
+	type args struct {
+		list1 []int
+		list2 []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "both lists empty",
+			args: args{
+				list1: []int{},
+				list2: []int{},
+			},
+			want: []int{},
+		},
+		{
+			name: "list 1 empty",
+			args: args{
+				list1: []int{},
+				list2: []int{1},
+			},
+			want: []int{1},
+		},
+		{
+			name: "list 2 empty",
+			args: args{
+				list1: []int{1},
+				list2: []int{},
+			},
+			want: []int{1},
+		},
+		{
+			name: "one digit numbers",
+			args: args{
+				list1: []int{1},
+				list2: []int{1},
+			},
+			want: []int{2},
+		},
+		{
+			name: "numbers of same length",
+			args: args{
+				list1: []int{1, 1, 1},
+				list2: []int{2, 5, 7},
+			},
+			want: []int{3, 6, 8},
+		},
+		{
+			name: "numbers of different length",
+			args: args{
+				list1: []int{1, 1, 1, 7},
+				list2: []int{2, 5, 7},
+			},
+			want: []int{3, 6, 8, 7},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			list1 := ds.CreateLinkedListFromSlice(tt.args.list1)
+			list2 := ds.CreateLinkedListFromSlice(tt.args.list2)
+			got := SumReversedListsV2(&list1, &list2)
+			if !reflect.DeepEqual(ds.LinkedListToSlice(got), tt.want) {
+				t.Errorf("SumReversedLists() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

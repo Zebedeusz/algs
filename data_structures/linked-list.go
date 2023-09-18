@@ -31,7 +31,7 @@ func CreateLinkedListFromSlice(slice []int) LinkedList {
 func LinkedListToSlice(list *LinkedList) []int {
 	listArr := make([]int, 0, 10)
 	if list == nil || list.First == nil {
-		return listArr
+		return []int{}
 	}
 	for currNode := list.First; currNode != nil; currNode = currNode.Next {
 		listArr = append(listArr, currNode.Value)
