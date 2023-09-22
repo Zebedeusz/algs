@@ -101,3 +101,92 @@ func TestStackLinkedList_Pop(t *testing.T) {
 		})
 	}
 }
+
+func TestStackArray_Push(t *testing.T) {
+	type fields struct {
+		array []int
+	}
+	type args struct {
+		v int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   []int
+	}{
+		{
+			name: "empty stack",
+			fields: fields{
+				array: []int{},
+			},
+			args: args{
+				v: 1,
+			},
+			want: []int{1},
+		},
+		{
+			name: "stack with values",
+			fields: fields{
+				array: []int{1, 2, 3, 4},
+			},
+			args: args{
+				v: 5,
+			},
+			want: []int{5, 1, 2, 3, 4},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := &StackArray{
+				array: tt.fields.array,
+			}
+			s.Push(tt.args.v)
+			if !reflect.DeepEqual(tt.want, s.array) {
+				t.Errorf("StackArray.Push = %v, want = %v", s.array, tt.want)
+			}
+		})
+	}
+}
+
+func TestStackArray_Pop(t *testing.T) {
+	type fields struct {
+		array []int
+	}
+	tests := []struct {
+		name               string
+		fields             fields
+		want               int
+		wantRemainingStack []int
+	}{
+		{
+			name: "empty stack",
+			fields: fields{
+				array: []int{},
+			},
+			want:               -1,
+			wantRemainingStack: []int{},
+		},
+		{
+			name: "stack with values",
+			fields: fields{
+				array: []int{1, 2, 3, 4, 5},
+			},
+			want:               1,
+			wantRemainingStack: []int{2, 3, 4, 5},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := &StackArray{
+				array: tt.fields.array,
+			}
+			if got := s.Pop(); got != tt.want {
+				t.Errorf("StackArray.Pop() = %v, want %v", got, tt.want)
+			}
+			if !reflect.DeepEqual(s.array, tt.wantRemainingStack) {
+				t.Errorf("remainingStack = %v, wantRemainingStack = %v", s.array, tt.wantRemainingStack)
+			}
+		})
+	}
+}

@@ -31,3 +31,22 @@ func (s *StackLinkedList) Pop() int {
 	s.first = s.first.Next
 	return v
 }
+
+type StackArray struct {
+	array []int
+}
+
+func (s *StackArray) Push(v int) {
+	s.array = append([]int{v}, s.array...)
+}
+
+func (s *StackArray) Pop() int {
+	if len(s.array) == 0 {
+		return -1
+	}
+	v := s.array[0]
+
+	s.array = s.array[1:]
+
+	return v
+}
